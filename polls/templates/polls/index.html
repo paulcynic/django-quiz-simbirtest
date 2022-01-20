@@ -1,0 +1,12 @@
+{% extends 'polls/main.html' %}
+
+{% block content %}
+        <div>
+            {% if quiz %}
+                <h1><a class="btn btn-outline-secondary" href="{% url 'polls:questions' quiz_id=quiz.id %}">{{ quiz.title }}</a></h1>
+            {% else %}
+                <p>There is no any quiz.</p>
+            {% endif %}
+        </div>
+{% endblock %}
+

@@ -1,0 +1,59 @@
+{% extends 'polls/main.html' %}
+
+{% block title %}Questions{% endblock %}
+
+{% block nav-header %}<a class="navbar-brand" href="">{{ quiz.title }}</a>{% endblock %}
+
+{% block content %}
+
+<div>
+        <h2>Вопрос: {{ page.number }} </h2>
+</div>
+
+{% block checkbox %}
+<div class="d-flex flex-column">
+{% for question in questions %}
+    {% if question %}
+        <div>
+            <h3>{{ question.question_text }}</h3>
+        </div>
+        <div>
+        {% with choice_list=question.choice_set.all %}
+            {% if choice_list %}
+            <form method="post"> {% csrf_token %}
+                <ul>
+                    {% for choice in choice_list %}
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}"><p>{{ choice.choice_text }}</p></label><br>
+                    {% endfor %}
+                </ul>
+                <input type="hidden" name="question" value="{{ question.id }}">
+                <input type="hidden" name="quiz" value="{{ question.quiz.id }}">
+                <input type="hidden" name="page" value="{{ page.number }}">
+                <input type="submit" value="Сохранить">
+            </form>
+            {% else %}
+                <p>No choices are available.</p>
+            {% endif %}
+        {% endwith %}
+        </div>
+    {% else %}
+        <p>No questions are available.</p>
+    {% endif %}
+{% endfor %}
+</div>
+{% endblock %}
+
+<div>   
+    <p>
+        <a href="?page=1">&lt;&lt;</a>
+            {% if page.has_previous %}
+                <span>&nbsp;&nbsp;</span>
+                <a href="?page={{ page.previous_page_number }}">&lt;</a>
+            {% endif %}
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                вопрос {{ page.number }} из {{ page.paginator.num_pages }}
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+    </p>
+</div>
+{% endblock %}
