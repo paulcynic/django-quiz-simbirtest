@@ -30,8 +30,6 @@ def get_answer(request, quiz_id):
                'page': page,
                'quiz': quiz}
     if request.method == 'POST':
-        page_num = request.POST['page']
-        # Получает номер страницы из запроса POST
         answer_form = AnswerForm(request.POST)
         if answer_form.is_valid():
             print('form is valid!')

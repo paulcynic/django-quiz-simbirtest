@@ -44,10 +44,13 @@ def get_page_num(request) -> int:
 
 
 def get_template(ord_list, page_num: Union[int, str]) -> str:
-    if ord_list[int(page_num)-1].correct_num == 1:
+    try:
+        if ord_list[int(page_num)-1].correct_num in [0, 1]:
+            return 'polls/question_list.html'
+        else:
+            return 'polls/checkbox.html'
+    except IndexError:
         return 'polls/question_list.html'
-    else:
-        return 'polls/checkbox.html'
 
 
 def get_client_answers(quiz_id: int) -> List:
