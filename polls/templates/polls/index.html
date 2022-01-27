@@ -3,7 +3,7 @@
 {% block content %}
         <div>
             {% if quiz %}
-                <h1><a class="btn btn-outline-secondary" href="{% url 'polls:questions' quiz_id=quiz.id %}">{{ quiz.title }}</a></h1>
+                <h1><a id='push_button' class="btn btn-outline-secondary" href="{% url 'polls:questions' quiz_id=quiz.id %}">{{ quiz.title }}</a></h1>
             {% else %}
                 <p>There is no any quiz.</p>
             {% endif %}
